@@ -25,8 +25,9 @@ NEWS_DIR = Path(os.environ.get("NEWS_DIR", "news"))
 OUTPUT = Path(os.environ.get("OUTPUT", "index.md"))
 SITE_TITLE = os.environ.get("SITE_TITLE", "News-Übersicht")
 
-# Dateiname beginnt mit einem ISO-Datum: 2026-07-28.md oder 2026-07-28-irgendwas.md
-DATE_RE = re.compile(r"^(\d{4})-(\d{2})-(\d{2})")
+# Datum darf IRGENDWO im Dateinamen stehen, z.B.:
+#   2026-07-31_KI-News.md   ·   KI-News_2026-08-02.md   ·   2026-07-02-KI-Tagesuebersicht.md
+DATE_RE = re.compile(r"(\d{4})-(\d{2})-(\d{2})")
 
 MONTHS_DE = {
     1: "Januar", 2: "Februar", 3: "März", 4: "April", 5: "Mai", 6: "Juni",
@@ -67,7 +68,7 @@ def collect_entries():
     for path in NEWS_DIR.glob("*.md"):
         if path.name.lower() == "index.md":
             continue
-        m = DATE_RE.match(path.name)
+        m = DATE_RE.search(path.name)
         if not m:
             continue
         try:
