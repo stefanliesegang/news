@@ -1,4 +1,4 @@
-name: Build News Index
+name: Build Daily News Index
 
 # Baut index.md automatisch neu, sobald neue Summaries im news/-Ordner landen.
 on:
