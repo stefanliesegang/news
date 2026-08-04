@@ -1,17 +1,16 @@
 name: Build Daily News Index
 
-# Baut index.md automatisch neu, sobald neue Summaries im news/-Ordner landen.
 on:
   push:
     branches: [main]
     paths:
-      - "news/**.md"
+      - "news/*.md"
       - "generate_index.py"
       - ".github/workflows/build-index.yml"
-  workflow_dispatch: {}   # erlaubt manuelles Auslösen im Actions-Tab
+  workflow_dispatch: {}
 
 permissions:
-  contents: write          # nötig, damit die Action den Commit zurückpushen darf
+  contents: write
 
 jobs:
   build:
@@ -36,10 +35,10 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if ! git diff --quiet -- index.md; then
+          if git diff --quiet -- index.md; then
+            echo "index.md unverändert – kein Commit nötig."
+          else
             git add index.md
             git commit -m "chore: update news index [skip ci]"
             git push
-          else
-            echo "index.md unverändert – kein Commit nötig."
           fi
