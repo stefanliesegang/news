@@ -1,0 +1,8 @@
+title: News-Übersicht
+description: Automatisch generierte Übersicht aller Daily News Summaries
+theme: jekyll-theme-cayman
+
+exclude:
+  - README.md
+  - generate_index.py
+  - .github/
